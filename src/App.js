@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import History from './History';
+import Parameter from './Parameter';
+import Result from './Result';
 
-function App() {
+class App extends Component {
+  constructor (props){
+    super(props)
+    this.state= {
+      result:0,
+      history:[]
+  }
+  }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+    console.log(this.state);
+  }
+
+  onClickResult = () => {
+    this.setState({history: [...this.state.history, {operation: this.state.result, result: eval(this.state.result)}]})
+  }
+
+
+  render() { 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Parameter handleChange={this.handleChange} onClickResult={this.onClickResult}/>
+      <Result  value={this.state.result.toString()}/>
+      <History history={this.state.history}/>
     </div>
   );
+  }
 }
 
 export default App;
