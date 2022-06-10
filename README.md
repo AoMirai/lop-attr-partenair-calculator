@@ -1,1 +1,2 @@
-# lop-attr-partenair-calculator
+# 
+lop-attr-partners-calculator 
