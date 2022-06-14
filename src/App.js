@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   handleChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.id]: event.target.value });
     console.log(this.state);
   }
 
@@ -25,6 +25,7 @@ class App extends Component {
   render() { 
   return (
     <div className="App">
+      <h2>Legend of Phenix parteners upgrade calulator</h2>
       <Parameter handleChange={this.handleChange} onClickResult={this.onClickResult}/>
       <Result  value={this.state.result.toString()}/>
       <History history={this.state.history}/>
