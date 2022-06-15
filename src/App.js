@@ -23,10 +23,10 @@ class App extends Component {
 
   handleChangeStats = (event) => {
     for (let i = 0; i < 4; i++) {
-      const element = this.state[event.target.className][i];
+      
       let updateState = this.state[event.target.className];
       let state = { ...updateState[i] };
-      if (Object.keys(updateState[i])[0] == event.target.name)
+      if (Object.keys(updateState[i])[0] === event.target.name)
         state[event.target.name] = parseInt(event.target.value);
       updateState[i] = state;
       this.setState({ [event.target.className]: updateState });
