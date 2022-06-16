@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import History from './History';
 import Parameter from './Parameter';
 import Result from './Result';
+import './index.css';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends Component {
       this.setState({ [event.target.className]: updateState });
     }
   }
+
   onClickResult = () => {
 
     let attr = [];
@@ -69,6 +71,7 @@ class App extends Component {
       <div className="App">
         <h2>Legend of Phenix parteners upgrade calulator</h2>
         <Parameter handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
+        <button onClick={this.onClickResult}>Calculer</button>
         <Result value={this.state.result.toString()} />
         <History history={this.state.history} />
       </div>

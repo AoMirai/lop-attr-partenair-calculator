@@ -5,9 +5,83 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.App {
+  width: 100%;
+}
+.Parameter .wrap-content{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.Parameter .wrap-content.col{
+  border-radius: 15px;
+  width: fit-content;
+  max-width: 50vw;
+  background-color: grey;
+  border: 1px solid rgb(66, 66, 66);
+  margin: 5px;
+  padding: 5px;
+  justify-content: space-evenly;
+
+}
+.Parameter .title {
+  margin-left: 10px;
+  font-size: 20px;
+}
+.Parameter .para {
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  margin: 5px;
+  width: fit-content;
+  background-color: lightgrey;
+  width: 23vw;
+}
+.Parameter .para.up {
+  width: 100%;
+}
+.Input input{
+  width: 75px;
+}
+.Input {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+.Parameter .map {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#name {
+  width: 200px;
+}
+button {
+  font-size: 18px;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.Result input {
+  margin: 5px;
+  font-size: 25px;
+}
+.Input.Wisdom {
+  color: #d97484;
+}
+.Input.Politics {
+  color: #6d9884;
+}
+.Input.Charisma {
+  color: #b789d2;
+}
+.Input.Authority {
+  color: #da9b56;
 }
