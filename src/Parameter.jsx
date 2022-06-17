@@ -96,7 +96,7 @@ class Parameter extends Component {
                             <div className='map'>
                                 {potential.map(pot =>
                                     <Input handleChange={this.props.handleChangeStats}
-                                        className='up'
+                                        className='potUp'
                                         type="number"
                                         key={'up' + pot}
                                         id={'up' + pot}
@@ -108,17 +108,17 @@ class Parameter extends Component {
                             <div className='map'>
                                 {potential.map(pot =>
                                     <Input handleChange={this.props.handleChangeStats}
-                                        className='up'
+                                        className='pourcentUp'
                                         type="number"
                                         key={'%up' + pot}
                                         id={'%up' + pot}
                                         name={pot} />)}
                             </div>
                             <Input handleChange={this.props.handleChange}
-                                className='up'
+                                className='lvlUp'
                                 type="number"
-                                key='uplvl'
-                                id='uplvl'
+                                key='lvlUp'
+                                id='lvlUp'
                                 name='Level' />
                         </div>
                     </div>
