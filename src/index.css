@@ -29,8 +29,7 @@ h2, h3 {
   max-width: 50vw;
   margin: 5px;
   padding: 5px;
-  justify-content: space-evenly;
-
+  flex-direction: column;
 }
 .Parameter .title {
   margin-left: 10px;
@@ -48,6 +47,10 @@ h2, h3 {
 }
 .Parameter .para.up {
   width: 100%;
+  height: fit-content;
+}
+.Parameter .para.up .block{
+  margin: 5px;
 }
 .Input input{
   width: 75px;
@@ -69,15 +72,18 @@ h2, h3 {
 #name {
   width: 200px;
 }
-button {
+button.Calculer{
   font-size: 18px;
   padding: 5px 10px;
   margin: 5px;
+  margin-left: 14px;
 }
 .Result input {
   margin: 5px;
   font-size: 25px;
   border-radius: 7px;
+  margin-left: 12px;
+
 
 }
 .Input.Wisdom {
@@ -97,4 +103,8 @@ button {
   padding: 5px;
   margin: 2px;
   text-align: center;
+}
+.Input.Level {
+  margin: 2px;
+  margin-left: 8px;
 }

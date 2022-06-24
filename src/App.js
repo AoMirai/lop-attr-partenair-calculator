@@ -93,7 +93,7 @@ class App extends Component {
       <div className="App">
         <h2>Legend of Phenix parteners upgrade calulator</h2>
         <Parameter handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
-        <button onClick={this.onClickResult}>Calculer</button>
+        <button className='Calculer' onClick={this.onClickResult}>Calculer</button>
         <Result value={this.state.resultUp} />
         <History history={this.state.history} />
       </div>
