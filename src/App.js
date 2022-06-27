@@ -15,6 +15,7 @@ class App extends Component {
       confident: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       knowledge: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       comprehension: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
+      other: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       potUp: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       pourcentUp: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }]
     }
@@ -29,7 +30,7 @@ class App extends Component {
       let updateState = this.state[event.target.className];
       let state = { ...updateState[i] };
       if (Object.keys(updateState[i])[0] === event.target.name)
-        state[event.target.name] = parseInt(event.target.value);
+        state[event.target.name] = parseFloat(event.target.value);
       updateState[i] = state;
       this.setState({ [event.target.className]: updateState });
     }
@@ -37,12 +38,12 @@ class App extends Component {
 
   onClickResult = () => {
 
-    let {name, potUp, lvlUp, pourcentUp} = this.state;
-    lvlUp = parseInt(lvlUp);
+    let {name, potUp, lvlUp, pourcentUp, bond, confident, knowledge, comprehension, other, pot} = this.state;
+    lvlUp = parseFloat(lvlUp);
     let totalAttr = 0;
     let totalPourcent = 0;
     let result = 0;
-    const lvl = parseInt(this.state.lvl)
+    const lvl = parseFloat(this.state.lvl)
     let coef = (((lvl * lvl) + lvl + 18) / 10);
     let totalAttrUp = 0;
     let totalPourcentUp = 0;
@@ -50,27 +51,40 @@ class App extends Component {
     let coefUp = (((totalLvlUp * totalLvlUp) + totalLvlUp + 18) / 10);
 
     for (let i = 0; i < this.state.pot.length; i++) {
-      const element = parseInt(Object.values(this.state.pot[i])[0]);
+      const element = parseFloat(Object.values(this.state.pot[i])[0]);
       const attr = (element * coef) + 10;
 
-      const up = parseInt(Object.values(this.state.potUp[i])[0]);
+      const up = parseFloat(Object.values(this.state.potUp[i])[0]);
       const attrUp = ( (element + up) * coefUp) + 10;
 
       totalAttr += attr;
-      totalPourcent += parseInt(Object.values(this.state.bond[i])[0]) * attr / 100;
-      totalPourcent += parseInt(Object.values(this.state.confident[i])[0]) * attr / 100;
-      totalPourcent += parseInt(Object.values(this.state.knowledge[i])[0]) * attr / 100;
-      totalPourcent += parseInt(Object.values(this.state.comprehension[i])[0]) * attr / 100;
+      totalPourcent += parseFloat(Object.values(bond[i])[0]) * attr / 100;
+      totalPourcent += parseFloat(Object.values(confident[i])[0]) * attr / 100;
+      totalPourcent += parseFloat(Object.values(knowledge[i])[0]) * attr / 100;
+      totalPourcent += parseFloat(Object.values(comprehension[i])[0]) * attr / 100;
+      totalPourcent += parseFloat(Object.values(other[i])[0]) * attr / 100;
 
       totalAttrUp += attrUp;
-      totalPourcentUp += parseInt(Object.values(this.state.bond[i])[0]) * attrUp / 100;
-      totalPourcentUp += parseInt(Object.values(this.state.confident[i])[0]) * attrUp / 100;
-      totalPourcentUp += parseInt(Object.values(this.state.knowledge[i])[0]) * attrUp / 100;
-      totalPourcentUp += parseInt(Object.values(this.state.comprehension[i])[0]) * attrUp / 100;
-      totalPourcentUp += parseInt(Object.values(this.state.pourcentUp[i])[0]) * attrUp / 100;
+      totalPourcentUp += parseFloat(Object.values(bond[i])[0]) * attrUp / 100;
+      totalPourcentUp += parseFloat(Object.values(confident[i])[0]) * attrUp / 100;
+      totalPourcentUp += parseFloat(Object.values(knowledge[i])[0]) * attrUp / 100;
+      totalPourcentUp += parseFloat(Object.values(comprehension[i])[0]) * attrUp / 100;
+      totalPourcentUp += parseFloat(Object.values(other[i])[0]) * attr / 100;
+      totalPourcentUp += parseFloat(Object.values(pourcentUp[i])[0]) * attrUp / 100;
     }
 
-    result = (totalAttrUp - totalAttr) + (totalPourcentUp - totalPourcent);
+    let storage = window.localStorage;
+    let listPartener = storage.getItem('partener');
+    const partener = {
+      [name] : { 'lvl': lvl, pot, bond, confident, knowledge, comprehension, other}
+    }
+    if (!listPartener) {
+      storage.setItem('partener', JSON.stringify(partener));
+    } else {
+      storage.setItem('partener', JSON.stringify({...listPartener, partener}));
+    }
+
+    result = parseInt((totalAttrUp - totalAttr) + (totalPourcentUp - totalPourcent));
 
 
     this.setState({
