@@ -23,7 +23,7 @@ class App extends Component {
 
   componentDidMount = () => {
     let storage = window.localStorage;
-    let listPartners = storage.getItem('partener');
+    let listPartners = storage.getItem('partner');
     this.setState({ listPartners : JSON.parse(listPartners) });
   }
 
@@ -81,20 +81,21 @@ class App extends Component {
     }
 
     let storage = window.localStorage;
-    let listPartners = storage.getItem('partener');
-    const partener = {
+    let listPartners = JSON.parse(storage.getItem('partner'));
+    const partner = {
       [name] : { 'lvl': lvl, pot, bond, confident, knowledge, comprehension, other}
     }
+    console.log({...listPartners, ...partner[0]});
     if (!listPartners) {
-      storage.setItem('partener', JSON.stringify(partener));
+      storage.setItem('partner', JSON.stringify(partner));
     } else {
-      storage.setItem('partener', JSON.stringify({...listPartners, partener}));
+      storage.setItem('partner', JSON.stringify({...listPartners, partner}));
     }
 
     result = parseInt((totalAttrUp - totalAttr) + (totalPourcentUp - totalPourcent));
 
     this.setState({
-      listPartners : {...listPartners, partener},
+      listPartners : {...listPartners, partner},
       result,
       history: [
         ...this.state.history,
@@ -113,7 +114,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h2>Legend of Phenix parteners upgrade calulator</h2>
+        <h2>Legend of Phenix partners upgrade calulator</h2>
         <Parameter listPartners={this.state.listPartners} handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
         <button className='Calculer' onClick={this.onClickResult}>Calculer</button>
         <Result value={this.state.resultUp} />

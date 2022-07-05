@@ -44,10 +44,25 @@ class Parameter extends Component {
         this.setState(update);
     }
 
+    handleChangeParameter = (event) => {
+        this.setState({ [event.target.id]: event.target.value });
+        this.props.handleChange(event);
+    }
 
+    handleChangeStatsParameter = (event) => {
+        for (let i = 0; i < 4; i++) {
+          let updateState = this.state[event.target.className];
+          let state = { ...updateState[i] };
+          if (Object.keys(updateState[i])[0] === event.target.name)
+            state[event.target.name] = parseFloat(event.target.value);
+          updateState[i] = state;
+          this.setState({ [event.target.className]: updateState });
+        }
+        this.props.handleChangeStats(event);
+      }
 
     render() {
-        const { handleChange, handleChangeStats, listPartners } = this.props;
+        const { handleChangeStats, listPartners } = this.props;
         const partnerName = [];
         for (const key in listPartners) {
             if (Object.hasOwnProperty.call(listPartners, key)) {
@@ -61,8 +76,8 @@ class Parameter extends Component {
                         <option value="">New Partner</option>
                         {partnerName.map((x, i) => <option key={i} value={x}>{x}</option>)}
                     </select>
-                    <Input handleChange={handleChange} className='name' name="Name" id="name" type="text" value={this.state.name} />
-                    <Input handleChange={handleChange} className='lvl' type="number" name="Level" id="lvl" value={this.state.lvl} />
+                    <Input handleChange={this.handleChangeParameter} className='name' name="Name" id="name" type="text" value={this.state.name} />
+                    <Input handleChange={this.handleChangeParameter} className='lvl' type="number" name="Level" id="lvl" value={this.state.lvl} />
                 </div>
                 <div className='wrap-content'>
 
@@ -71,7 +86,7 @@ class Parameter extends Component {
                             <div className='title'>Potential</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='pot'
                                         type="number"
                                         key={'pot' + pot}
@@ -85,7 +100,7 @@ class Parameter extends Component {
                             <div className='title'>Bond %</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='bond'
                                         type="number"
                                         key={'bond' + pot}
@@ -99,7 +114,7 @@ class Parameter extends Component {
                             <div className='title'>Confident %</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='confident'
                                         type="number"
                                         key={'confident' + pot}
@@ -115,7 +130,7 @@ class Parameter extends Component {
                             <div className='title'>Knowledge %</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='knowledge'
                                         type="number"
                                         key={'knowledge' + pot}
@@ -129,7 +144,7 @@ class Parameter extends Component {
                             <div className='title'>Comprehension %</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='comprehension'
                                         type="number"
                                         key={'comprehension' + pot}
@@ -143,7 +158,7 @@ class Parameter extends Component {
                             <div className='title'>Other %</div>
                             <div className='map'>
                                 {potential.map((pot, i) =>
-                                    <Input handleChange={handleChangeStats}
+                                    <Input handleChange={this.handleChangeStatsParameter}
                                         className='other'
                                         type="number"
                                         key={'other' + pot}
@@ -183,7 +198,7 @@ class Parameter extends Component {
                                 </div>
                             </div>
                             <div className='block'>
-                                <Input handleChange={handleChange}
+                                <Input handleChange={handleChangeStats}
                                     className='lvlUp'
                                     type="number"
                                     key='lvlUp'
