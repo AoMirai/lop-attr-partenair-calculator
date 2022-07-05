@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 class Input extends Component {
 
     render() {
+        const {name, className, type, id, handleChange, value} = this.props;
         return (
-            <div className={'Input ' + this.props.name}>
-                <label htmlFor={this.props.name}>{this.props.name}</label>
+            <div className={'Input ' + name}>
+                <label htmlFor={name}>{name}</label>
                 <input
-                className={this.props.className}
-                type={this.props.type}
-                id={this.props.id}
-                name={this.props.name}
-                onChange={this.props.handleChange}
+                className={className}
+                type={type}
+                id={id}
+                name={name}
+                onChange={handleChange}
+                value={value}
               />
             </div>
         )

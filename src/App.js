@@ -21,6 +21,13 @@ class App extends Component {
     }
   }
 
+  componentDidMount = () => {
+    let storage = window.localStorage;
+    let listPartners = storage.getItem('partener');
+    this.setState({ listPartners : JSON.parse(listPartners) });
+  }
+
+
   handleChange = (event) => {
     this.setState({ [event.target.id]: event.target.value });
   }
@@ -36,7 +43,7 @@ class App extends Component {
     }
   }
 
-  onClickResult = () => {
+  onClickResult = async () => {
 
     let {name, potUp, lvlUp, pourcentUp, bond, confident, knowledge, comprehension, other, pot} = this.state;
     lvlUp = parseFloat(lvlUp);
@@ -74,21 +81,22 @@ class App extends Component {
     }
 
     let storage = window.localStorage;
-    let listPartener = storage.getItem('partener');
+    let listPartners = storage.getItem('partener');
     const partener = {
       [name] : { 'lvl': lvl, pot, bond, confident, knowledge, comprehension, other}
     }
-    if (!listPartener) {
+    if (!listPartners) {
       storage.setItem('partener', JSON.stringify(partener));
     } else {
-      storage.setItem('partener', JSON.stringify({...listPartener, partener}));
+      storage.setItem('partener', JSON.stringify({...listPartners, partener}));
     }
 
     result = parseInt((totalAttrUp - totalAttr) + (totalPourcentUp - totalPourcent));
 
-
     this.setState({
-      result, history: [
+      listPartners : {...listPartners, partener},
+      result,
+      history: [
         ...this.state.history,
         {
           name,
@@ -106,7 +114,7 @@ class App extends Component {
     return (
       <div className="App">
         <h2>Legend of Phenix parteners upgrade calulator</h2>
-        <Parameter handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
+        <Parameter listPartners={this.state.listPartners} handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
         <button className='Calculer' onClick={this.onClickResult}>Calculer</button>
         <Result value={this.state.resultUp} />
         <History history={this.state.history} />
