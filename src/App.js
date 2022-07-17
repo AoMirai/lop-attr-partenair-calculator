@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      result: [],
+      result: 0,
       history: [],
       pot: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       bond: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
@@ -17,7 +17,10 @@ class App extends Component {
       comprehension: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       other: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
       potUp: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
-      pourcentUp: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }]
+      pourcentUp: [{ Wisdom: 0 }, { Politics: 0 }, { Charisma: 0 }, { Authority: 0 }],
+      lvlUp:0,
+      lvl:0,
+      name: ''
     }
   }
 
@@ -43,6 +46,10 @@ class App extends Component {
     }
   }
 
+  handleRegister = (update) => {
+    this.setState(update);
+  }
+
   onClickResult = async () => {
 
     let {name, potUp, lvlUp, pourcentUp, bond, confident, knowledge, comprehension, other, pot} = this.state;
@@ -63,7 +70,6 @@ class App extends Component {
 
       const up = parseFloat(Object.values(this.state.potUp[i])[0]);
       const attrUp = ( (element + up) * coefUp) + 10;
-
       totalAttr += attr;
       totalPourcent += parseFloat(Object.values(bond[i])[0]) * attr / 100;
       totalPourcent += parseFloat(Object.values(confident[i])[0]) * attr / 100;
@@ -79,23 +85,20 @@ class App extends Component {
       totalPourcentUp += parseFloat(Object.values(other[i])[0]) * attr / 100;
       totalPourcentUp += parseFloat(Object.values(pourcentUp[i])[0]) * attrUp / 100;
     }
-
     let storage = window.localStorage;
     let listPartners = JSON.parse(storage.getItem('partner'));
     const partner = {
       [name] : { 'lvl': lvl, pot, bond, confident, knowledge, comprehension, other}
     }
-    console.log({...listPartners, ...partner[0]});
     if (!listPartners) {
       storage.setItem('partner', JSON.stringify(partner));
     } else {
-      storage.setItem('partner', JSON.stringify({...listPartners, partner}));
+      storage.setItem('partner', JSON.stringify({...listPartners, ...partner}));
     }
 
     result = parseInt((totalAttrUp - totalAttr) + (totalPourcentUp - totalPourcent));
-
     this.setState({
-      listPartners : {...listPartners, partner},
+      listPartners : {...listPartners, ...partner},
       result,
       history: [
         ...this.state.history,
@@ -110,14 +113,34 @@ class App extends Component {
     })
   }
 
+  onClickStorage = (e) => {
+    let { name, bond, confident, knowledge, comprehension, other, pot} = this.state;
+    const lvl = parseFloat(this.state.lvl);
+    console.log(name);
+    let storage = window.localStorage;
+    let listPartners = JSON.parse(storage.getItem('partner'));
+    const partner = {
+      [name] : { 'lvl': lvl, pot, bond, confident, knowledge, comprehension, other}
+    }
+    if (!listPartners) {
+      storage.setItem('partner', JSON.stringify(partner));
+    } else {
+      storage.setItem('partner', JSON.stringify({...listPartners, ...partner}));
+    }
+    console.log(partner);
+    this.setState({
+      listPartners : {...listPartners, ...partner}
+    })
+  }
 
   render() {
     return (
       <div className="App">
         <h2>Legend of Phenix partners upgrade calulator</h2>
-        <Parameter listPartners={this.state.listPartners} handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
+        <Parameter handleRegister={this.handleRegister} listPartners={this.state.listPartners} handleChange={this.handleChange} handleChangeStats={this.handleChangeStats} onClickResult={this.onClickResult} />
         <button className='Calculer' onClick={this.onClickResult}>Calculer</button>
-        <Result value={this.state.resultUp} />
+        <button className='Calculer' onClick={this.onClickStorage}>Enregistrer</button>
+        <Result value={this.state.result} />
         <History history={this.state.history} />
       </div>
     );
